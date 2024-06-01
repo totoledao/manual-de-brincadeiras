@@ -16,16 +16,18 @@ class BrincadeiraViewModel(
     private val dao: BrincadeiraDao
 ) : ViewModel() {
     private val _sortType = MutableStateFlow(SortType.ID)
-    private val _brincadeiras =
-        _sortType.flatMapLatest { sortType ->
-            when (sortType) {
-                SortType.ID -> dao.getOrderedBrincadeiras("id", _state.value.nome)
-                SortType.NOME -> dao.getOrderedBrincadeiras("nome", _state.value.nome)
-                SortType.IDADE_MIN -> dao.getOrderedBrincadeiras("idade_min", _state.value.nome)
-                SortType.IDADE_MAX -> dao.getOrderedBrincadeiras("idade_max", _state.value.nome)
-                SortType.FAVORITO -> dao.getFavoriteBrincadeiras(_state.value.nome)
-            }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    private val _searchQuery = MutableStateFlow("")
+    private val _brincadeiras = combine(_sortType, _searchQuery) { sortType, query ->
+        sortType to query
+    }.flatMapLatest { (sortType, query) ->
+        when (sortType) {
+            SortType.ID -> dao.getOrderedBrincadeiras("id", query)
+            SortType.NOME -> dao.getOrderedBrincadeiras("nome", query)
+            SortType.IDADE_MIN -> dao.getOrderedBrincadeiras("idade_min", query)
+            SortType.IDADE_MAX -> dao.getOrderedBrincadeiras("idade_max", query)
+            SortType.FAVORITO -> dao.getFavoriteBrincadeiras(query)
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private val _state = MutableStateFlow(BrincadeiraListState())
     val state =
@@ -54,6 +56,7 @@ class BrincadeiraViewModel(
                         nome = event.nome
                     )
                 }
+                _searchQuery.value = event.nome
             }
         }
     }
