@@ -1,4 +1,4 @@
-package com.toca.manualdebrincadeiras
+package com.toca.manualdebrincadeiras.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

@@ -1,4 +1,4 @@
-package com.toca.manualdebrincadeiras
+package com.toca.manualdebrincadeiras.screens.brincadeiraList
 
 data class BrincadeiraListState(
     val brincadeiras: List<String> = emptyList(),

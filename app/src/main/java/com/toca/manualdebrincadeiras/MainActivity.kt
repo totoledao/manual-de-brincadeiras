@@ -10,6 +10,9 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
+import com.toca.manualdebrincadeiras.database.BrincadeiraDatabase
+import com.toca.manualdebrincadeiras.screens.brincadeiraList.BrincadeiraListView
+import com.toca.manualdebrincadeiras.screens.brincadeiraList.BrincadeiraViewModel
 import com.toca.manualdebrincadeiras.ui.theme.ManualDeBrincadeirasTheme
 
 class MainActivity : ComponentActivity() {

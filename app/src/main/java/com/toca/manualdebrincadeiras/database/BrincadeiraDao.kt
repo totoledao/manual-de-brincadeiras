@@ -1,4 +1,4 @@
-package com.toca.manualdebrincadeiras
+package com.toca.manualdebrincadeiras.database
 
 import androidx.room.Dao
 import androidx.room.Query

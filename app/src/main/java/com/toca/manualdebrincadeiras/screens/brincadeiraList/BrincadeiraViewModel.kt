@@ -1,7 +1,8 @@
-package com.toca.manualdebrincadeiras
+package com.toca.manualdebrincadeiras.screens.brincadeiraList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.toca.manualdebrincadeiras.database.BrincadeiraDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

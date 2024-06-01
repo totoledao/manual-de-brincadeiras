@@ -1,4 +1,4 @@
-package com.toca.manualdebrincadeiras
+package com.toca.manualdebrincadeiras.screens.brincadeiraList
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll

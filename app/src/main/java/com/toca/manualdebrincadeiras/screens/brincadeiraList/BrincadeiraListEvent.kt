@@ -1,4 +1,4 @@
-package com.toca.manualdebrincadeiras
+package com.toca.manualdebrincadeiras.screens.brincadeiraList
 
 sealed interface BrincadeiraListEvent {
     data class GetBrincadeiras(val sortType: SortType) : BrincadeiraListEvent
