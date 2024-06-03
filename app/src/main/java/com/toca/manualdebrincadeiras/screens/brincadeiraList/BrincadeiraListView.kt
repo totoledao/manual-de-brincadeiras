@@ -22,11 +22,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.toca.manualdebrincadeiras.Routes
 
 @Composable
 fun BrincadeiraListView(
     state: BrincadeiraListState,
     onEvent: (BrincadeiraListEvent) -> Unit,
+    navController: NavHostController
 ) {
     Scaffold { padding ->
         LazyColumn(
@@ -92,9 +95,10 @@ fun BrincadeiraListView(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp, 0.dp, 16.dp, 0.dp),
+                        .padding(16.dp, 0.dp, 16.dp, 0.dp)
+                        .clickable { navController.navigate(Routes.Show.name + "/" + brincadeira.id) },
                 ) {
-                    Text(text = brincadeira, fontSize = 20.sp)
+                    Text(text = brincadeira.nome, fontSize = 20.sp)
                 }
             }
         }

@@ -13,3 +13,8 @@ data class Brincadeira(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 )
+
+data class BrincadeiraIndex(
+    val nome: String,
+    val id: Int,
+)
