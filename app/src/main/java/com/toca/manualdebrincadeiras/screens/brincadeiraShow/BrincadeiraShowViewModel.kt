@@ -13,9 +13,8 @@ import kotlinx.coroutines.flow.stateIn
 @OptIn(ExperimentalCoroutinesApi::class)
 class BrincadeiraShowViewModel(
     private val dao: BrincadeiraDao,
-    private val id: Int,
 ) : ViewModel() {
-    private val _id = MutableStateFlow<Int>(id)
+    private val _id = MutableStateFlow<Int>(0)
     private val _brincadeira = _id.flatMapLatest { id ->
         dao.showBrincadeira(id)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)

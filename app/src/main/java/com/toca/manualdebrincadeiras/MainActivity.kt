@@ -1,7 +1,6 @@
 package com.toca.manualdebrincadeiras
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -18,6 +17,7 @@ import androidx.room.Room
 import com.toca.manualdebrincadeiras.database.BrincadeiraDatabase
 import com.toca.manualdebrincadeiras.screens.brincadeiraList.BrincadeiraListView
 import com.toca.manualdebrincadeiras.screens.brincadeiraList.BrincadeiraListViewModel
+import com.toca.manualdebrincadeiras.screens.brincadeiraShow.BrincadeiraShowEvent
 import com.toca.manualdebrincadeiras.screens.brincadeiraShow.BrincadeiraShowView
 import com.toca.manualdebrincadeiras.screens.brincadeiraShow.BrincadeiraShowViewModel
 import com.toca.manualdebrincadeiras.ui.theme.ManualDeBrincadeirasTheme
@@ -73,7 +73,6 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     ) {
-                        val id = it.arguments?.getInt("id") ?: 0
                         val viewModel by viewModels<BrincadeiraShowViewModel>(
                             factoryProducer = {
                                 object : ViewModelProvider.Factory {
@@ -81,8 +80,7 @@ class MainActivity : ComponentActivity() {
                                         if (modelClass.isAssignableFrom(BrincadeiraShowViewModel::class.java)) {
                                             @Suppress("UNCHECKED_CAST")
                                             return BrincadeiraShowViewModel(
-                                                db.dao,
-                                                id
+                                                db.dao
                                             ) as T
 
                                         }
@@ -91,14 +89,12 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         )
+                        val id = it.arguments?.getInt("id") ?: 0
+                        viewModel.onEvent(BrincadeiraShowEvent.ShowBrincadeira(id))
                         val state by viewModel.state.collectAsState()
-                        Log.d("INIT", state.toString())
-                        val newState = state.copy(
-                            id = id,
-                        )
 
                         BrincadeiraShowView(
-                            state = newState,
+                            state = state,
                             onEvent = viewModel::onEvent,
                             navController = navController
                         )

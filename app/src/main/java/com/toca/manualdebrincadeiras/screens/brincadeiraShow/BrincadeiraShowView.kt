@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -35,14 +34,6 @@ fun BrincadeiraShowView(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            item {
-                Button(
-                    onClick = { onEvent(BrincadeiraShowEvent.ShowBrincadeira(state.id)) }
-
-                ) {
-                    Text(text = "Show id ${state.id}")
-                }
-            }
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
