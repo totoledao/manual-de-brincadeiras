@@ -23,4 +23,7 @@ interface BrincadeiraDao {
     @Query("SELECT id, nome FROM brincadeiras WHERE favorito = 1 AND nome LIKE '%' || :searchTerm || '%'")
     fun getFavoriteBrincadeiras(searchTerm: String = ""): Flow<List<BrincadeiraIndex>>
 
+    @Query("SELECT * FROM brincadeiras WHERE id = :id")
+    fun showBrincadeira(id: Int): Flow<Brincadeira>
+
 }

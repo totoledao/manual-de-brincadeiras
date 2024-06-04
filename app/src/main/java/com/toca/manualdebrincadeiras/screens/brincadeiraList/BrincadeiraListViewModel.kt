@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class BrincadeiraViewModel(
+class BrincadeiraListViewModel(
     private val dao: BrincadeiraDao
 ) : ViewModel() {
     private val _sortType = MutableStateFlow(SortType.ID)

@@ -1,6 +1,7 @@
 package com.toca.manualdebrincadeiras
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -16,8 +17,9 @@ import androidx.navigation.navArgument
 import androidx.room.Room
 import com.toca.manualdebrincadeiras.database.BrincadeiraDatabase
 import com.toca.manualdebrincadeiras.screens.brincadeiraList.BrincadeiraListView
-import com.toca.manualdebrincadeiras.screens.brincadeiraList.BrincadeiraViewModel
+import com.toca.manualdebrincadeiras.screens.brincadeiraList.BrincadeiraListViewModel
 import com.toca.manualdebrincadeiras.screens.brincadeiraShow.BrincadeiraShowView
+import com.toca.manualdebrincadeiras.screens.brincadeiraShow.BrincadeiraShowViewModel
 import com.toca.manualdebrincadeiras.ui.theme.ManualDeBrincadeirasTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,33 +30,34 @@ class MainActivity : ComponentActivity() {
         ).createFromAsset("brincadeiras.db").build()
     }
 
-    private val viewModel by viewModels<BrincadeiraViewModel>(
-        factoryProducer = {
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    if (modelClass.isAssignableFrom(BrincadeiraViewModel::class.java)) {
-                        @Suppress("UNCHECKED_CAST")
-                        return BrincadeiraViewModel(db.dao) as T
-
-                    }
-                    throw IllegalArgumentException("Unknown ViewModel class")
-                }
-            }
-        }
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ManualDeBrincadeirasTheme {
-                val state by viewModel.state.collectAsState()
                 val navController = rememberNavController()
 
                 NavHost(
                     navController = navController,
                     startDestination = Routes.Home.name,
                 ) {
+
                     composable(route = Routes.Home.name) {
+                        val viewModel by viewModels<BrincadeiraListViewModel>(
+                            factoryProducer = {
+                                object : ViewModelProvider.Factory {
+                                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                                        if (modelClass.isAssignableFrom(BrincadeiraListViewModel::class.java)) {
+                                            @Suppress("UNCHECKED_CAST")
+                                            return BrincadeiraListViewModel(db.dao) as T
+
+                                        }
+                                        throw IllegalArgumentException("Unknown ViewModel class")
+                                    }
+                                }
+                            }
+                        )
+                        val state by viewModel.state.collectAsState()
+
                         BrincadeiraListView(
                             state = state,
                             onEvent = viewModel::onEvent,
@@ -70,11 +73,33 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     ) {
-                        val id = it.arguments?.getInt("id")
+                        val id = it.arguments?.getInt("id") ?: 0
+                        val viewModel by viewModels<BrincadeiraShowViewModel>(
+                            factoryProducer = {
+                                object : ViewModelProvider.Factory {
+                                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                                        if (modelClass.isAssignableFrom(BrincadeiraShowViewModel::class.java)) {
+                                            @Suppress("UNCHECKED_CAST")
+                                            return BrincadeiraShowViewModel(
+                                                db.dao,
+                                                id
+                                            ) as T
+
+                                        }
+                                        throw IllegalArgumentException("Unknown ViewModel class")
+                                    }
+                                }
+                            }
+                        )
+                        val state by viewModel.state.collectAsState()
+                        Log.d("INIT", state.toString())
+                        val newState = state.copy(
+                            id = id,
+                        )
 
                         BrincadeiraShowView(
-                            state = id,
-                            onEvent = null,
+                            state = newState,
+                            onEvent = viewModel::onEvent,
                             navController = navController
                         )
                     }
