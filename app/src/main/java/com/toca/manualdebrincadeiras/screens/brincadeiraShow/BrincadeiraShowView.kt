@@ -19,7 +19,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 
@@ -49,16 +51,30 @@ fun BrincadeiraShowView(
                         modifier = Modifier.clickable { navController.popBackStack() }
                     )
 
-                    FavoriteIcon(isFavorite = state.brincadeira?.favorito == 1)
+                    FavoriteIcon(isFavorite = state.brincadeira?.brincadeira?.favorito == 1)
                 }
             }
             item {
                 Column {
-                    Text(text = state.brincadeira?.id.toString())
-                    Text(text = state.brincadeira?.nome ?: "")
-                    Text(text = state.brincadeira?.idade_min.toString())
-                    Text(text = state.brincadeira?.idade_max.toString())
-                    WebViewScreen(state.brincadeira?.descricao ?: "")
+                    Text(
+                        text = state.brincadeira?.brincadeira?.nome ?: "",
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(text = "ID: ${state.brincadeira?.brincadeira?.id.toString()}")
+                    Text(text = "Idade recomendada: ${state.brincadeira?.brincadeira?.idade_min.toString()} a ${state.brincadeira?.brincadeira?.idade_max.toString()} anos")
+                    state.brincadeira?.brincadeira?.integrantes?.let {
+                        Text(text = "Integrantes: ")
+                        Text(text = it)
+                    }
+                    state.brincadeira?.tipos?.let {
+                        Text(text = "Tipos:")
+                        it.forEach { tipo ->
+                            Text(text = tipo.nome)
+                        }
+                    }
+                    Text(text = "Descrição:")
+                    WebViewScreen(state.brincadeira?.brincadeira?.descricao ?: "")
                 }
             }
 
@@ -95,18 +111,23 @@ fun WebViewScreen(descricao: String) {
         update = { webView ->
             val unEncodedHtml = """
                 <html>
-                <head>
+                    <head>
                         <style>
+                            *, *:after, *:before {
+                                margin: 0;
+                                padding: 0;
+                                box-sizing: border-box;
+                            }                          
                             img {
                                 width: 100%;
                                 height: auto;
                                 display: block;
                                 margin: 0 auto;
-                            }
+                            }                          
                         </style>
                     </head>
-                    <body style='margin: 0; padding: 0;'>
-                        $descricao                        
+                    <body> 
+                        $descricao
                     </body>
                 </html>
             """.trimIndent()

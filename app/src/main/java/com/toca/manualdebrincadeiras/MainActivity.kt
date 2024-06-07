@@ -14,7 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.room.Room
-import com.toca.manualdebrincadeiras.database.BrincadeiraDatabase
+import com.toca.manualdebrincadeiras.database.Database
 import com.toca.manualdebrincadeiras.screens.brincadeiraList.BrincadeiraListView
 import com.toca.manualdebrincadeiras.screens.brincadeiraList.BrincadeiraListViewModel
 import com.toca.manualdebrincadeiras.screens.brincadeiraShow.BrincadeiraShowEvent
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
     private val db by lazy {
         Room.databaseBuilder(
             applicationContext,
-            BrincadeiraDatabase::class.java, "brincadeiras.db"
+            Database::class.java, "brincadeiras.db"
         ).createFromAsset("brincadeiras.db").build()
     }
 
@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                                     override fun <T : ViewModel> create(modelClass: Class<T>): T {
                                         if (modelClass.isAssignableFrom(BrincadeiraListViewModel::class.java)) {
                                             @Suppress("UNCHECKED_CAST")
-                                            return BrincadeiraListViewModel(db.dao) as T
+                                            return BrincadeiraListViewModel(db) as T
 
                                         }
                                         throw IllegalArgumentException("Unknown ViewModel class")
@@ -80,7 +80,7 @@ class MainActivity : ComponentActivity() {
                                         if (modelClass.isAssignableFrom(BrincadeiraShowViewModel::class.java)) {
                                             @Suppress("UNCHECKED_CAST")
                                             return BrincadeiraShowViewModel(
-                                                db.dao
+                                                db
                                             ) as T
 
                                         }

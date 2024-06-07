@@ -2,7 +2,7 @@ package com.toca.manualdebrincadeiras.screens.brincadeiraList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.toca.manualdebrincadeiras.database.BrincadeiraDao
+import com.toca.manualdebrincadeiras.database.Database
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BrincadeiraListViewModel(
-    private val dao: BrincadeiraDao
+    private val dao: Database
 ) : ViewModel() {
     private val _sortType = MutableStateFlow(SortType.ID)
     private val _searchQuery = MutableStateFlow("")
@@ -22,11 +22,11 @@ class BrincadeiraListViewModel(
         sortType to query
     }.flatMapLatest { (sortType, query) ->
         when (sortType) {
-            SortType.ID -> dao.getOrderedBrincadeiras("id", query)
-            SortType.NOME -> dao.getOrderedBrincadeiras("nome", query)
-            SortType.IDADE_MIN -> dao.getOrderedBrincadeiras("idade_min", query)
-            SortType.IDADE_MAX -> dao.getOrderedBrincadeiras("idade_max", query)
-            SortType.FAVORITO -> dao.getFavoriteBrincadeiras(query)
+            SortType.ID -> dao.brincadeiraDao.getOrderedBrincadeiras("id", query)
+            SortType.NOME -> dao.brincadeiraDao.getOrderedBrincadeiras("nome", query)
+            SortType.IDADE_MIN -> dao.brincadeiraDao.getOrderedBrincadeiras("idade_min", query)
+            SortType.IDADE_MAX -> dao.brincadeiraDao.getOrderedBrincadeiras("idade_max", query)
+            SortType.FAVORITO -> dao.brincadeiraDao.getFavoriteBrincadeiras(query)
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -43,7 +43,7 @@ class BrincadeiraListViewModel(
         when (event) {
             is BrincadeiraListEvent.GetBrincadeiras -> {
                 viewModelScope.launch {
-                    dao.getBrincadeiras()
+                    dao.brincadeiraDao.getBrincadeiras()
                 }
             }
 

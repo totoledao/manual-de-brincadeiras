@@ -2,6 +2,7 @@ package com.toca.manualdebrincadeiras.database
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -23,7 +24,13 @@ interface BrincadeiraDao {
     @Query("SELECT id, nome FROM brincadeiras WHERE favorito = 1 AND nome LIKE '%' || :searchTerm || '%'")
     fun getFavoriteBrincadeiras(searchTerm: String = ""): Flow<List<BrincadeiraIndex>>
 
-    @Query("SELECT * FROM brincadeiras WHERE id = :id")
-    fun showBrincadeira(id: Int): Flow<Brincadeira>
+    @Transaction
+    @Query("SELECT * FROM brincadeiras WHERE id = :brincadeiraId")
+    fun showBrincadeira(brincadeiraId: Int): Flow<BrincadeiraWithTipo>
+}
 
+@Dao
+interface TipoDao {
+    @Query("SELECT * FROM tipos")
+    fun getTipos(): Flow<List<Tipo>>
 }
