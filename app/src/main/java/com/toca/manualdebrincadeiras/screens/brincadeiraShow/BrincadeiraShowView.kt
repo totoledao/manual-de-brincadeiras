@@ -131,6 +131,7 @@ fun WebViewScreen(descricao: String) {
                     </body>
                 </html>
             """.trimIndent()
+            webView.isVerticalScrollBarEnabled = false;
             webView.loadDataWithBaseURL(
                 "file:///android_asset/images/",
                 unEncodedHtml,
