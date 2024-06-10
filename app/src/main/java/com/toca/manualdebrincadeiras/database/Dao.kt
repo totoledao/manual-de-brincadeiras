@@ -17,7 +17,7 @@ interface BrincadeiraDao {
         AND (b.idade_max <= :maxAge)
         AND (:isFavorite IS NULL OR b.favorito = :isFavorite)
         AND (
-            :typeIds IS NULL OR b.id IN (
+            :typeIdsSize = 0 OR b.id IN (
                 SELECT brincadeira_id
                 FROM brincadeiras_tipos
                 WHERE tipo_id IN (:typeIds)
@@ -34,8 +34,8 @@ interface BrincadeiraDao {
         minAge: Int,
         maxAge: Int,
         isFavorite: Int?,
-        typeIds: List<Int>?,
-        typeIdsSize: Int?
+        typeIds: List<Int>,
+        typeIdsSize: Int
     ): Flow<List<BrincadeiraIndex>>
 
     @Transaction

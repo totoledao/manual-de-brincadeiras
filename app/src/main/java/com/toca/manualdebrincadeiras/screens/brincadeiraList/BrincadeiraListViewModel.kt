@@ -16,7 +16,7 @@ class BrincadeiraListViewModel(private val dao: Database) : ViewModel() {
     private val _minAge = MutableStateFlow(3)
     private val _maxAge = MutableStateFlow(16)
     private val _isFavorite = MutableStateFlow<Int?>(null)
-    private val _typeIds = MutableStateFlow<List<Int>?>(null)
+    private val _typeIds = MutableStateFlow<List<Int>>(emptyList())
 
     private val _tipos = dao.tipoDao.getTipos()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -36,7 +36,7 @@ class BrincadeiraListViewModel(private val dao: Database) : ViewModel() {
                 maxAge = filter.maxAge,
                 isFavorite = filter.isFavorite,
                 typeIds = filter.typeIds,
-                typeIdsSize = filter.typeIds?.size ?: 0
+                typeIdsSize = filter.typeIds.size
             )
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -96,20 +96,17 @@ data class BrincadeiraFilter(
     val minAge: Int,
     val maxAge: Int,
     val isFavorite: Int?,
-    val typeIds: List<Int>?
+    val typeIds: List<Int>
 )
 
 fun handleChangeTypeId(
-    idList: MutableStateFlow<List<Int>?>,
+    idList: MutableStateFlow<List<Int>>,
     state: MutableStateFlow<BrincadeiraListState>,
     id: Int
 ) {
-    val newList = if (idList.value == null) listOf(id)
-    else
-        if (idList.value!!.contains(id))
-            if (idList.value!!.size == 1) null
-            else idList.value!!.filter { it != id }
-        else idList.value!! + id
+    val newList =
+        if (idList.value.contains(id)) idList.value.filter { it != id }
+        else idList.value + id
 
     idList.value = newList
     state.value = state.value.copy(

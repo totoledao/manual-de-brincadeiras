@@ -10,5 +10,5 @@ data class BrincadeiraListState(
     val minAge: Int = 3,
     val maxAge: Int = 16,
     val isFavorite: Int? = null,
-    val typeIds: List<Int>? = null
+    val typeIds: List<Int> = emptyList()
 )
