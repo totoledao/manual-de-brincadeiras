@@ -36,12 +36,14 @@ fun BrincadeiraShowView(
             contentPadding = padding,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(16.dp, 0.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(0.dp, 16.dp, 0.dp, 0.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
 
@@ -55,7 +57,9 @@ fun BrincadeiraShowView(
                 }
             }
             item {
-                Column {
+                Column(
+                    modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 16.dp),
+                ) {
                     Text(
                         text = state.brincadeira?.brincadeira?.nome ?: "",
                         fontSize = 22.sp,

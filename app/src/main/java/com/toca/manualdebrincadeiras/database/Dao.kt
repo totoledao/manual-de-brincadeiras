@@ -7,22 +7,36 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BrincadeiraDao {
-    @Query("SELECT id, nome FROM brincadeiras")
-    fun getBrincadeiras(): Flow<List<BrincadeiraIndex>>
-
     @Query(
-        "SELECT id, nome FROM brincadeiras WHERE nome LIKE '%' || :searchTerm || '%' ORDER BY CASE WHEN :columnName = 'nome' THEN nome " +
-                "WHEN :columnName = 'idade_min' THEN idade_min " +
-                "WHEN :columnName = 'idade_max' THEN idade_max " +
-                "ELSE id END ASC"
+        """
+        SELECT b.id, b.nome 
+        FROM brincadeiras b
+        LEFT JOIN brincadeiras_tipos bt ON b.id = bt.brincadeira_id
+        WHERE (b.nome LIKE '%' || :name || '%')
+        AND (b.idade_min >= :minAge)
+        AND (b.idade_max <= :maxAge)
+        AND (:isFavorite IS NULL OR b.favorito = :isFavorite)
+        AND (
+            :typeIds IS NULL OR b.id IN (
+                SELECT brincadeira_id
+                FROM brincadeiras_tipos
+                WHERE tipo_id IN (:typeIds)
+                GROUP BY brincadeira_id
+                HAVING COUNT(DISTINCT tipo_id) = :typeIdsSize
+            )
+        )
+        GROUP BY b.id
+        ORDER BY b.nome ASC
+        """
     )
-    fun getOrderedBrincadeiras(
-        columnName: String,
-        searchTerm: String = ""
+    fun getBrincadeiras(
+        name: String,
+        minAge: Int,
+        maxAge: Int,
+        isFavorite: Int?,
+        typeIds: List<Int>?,
+        typeIdsSize: Int?
     ): Flow<List<BrincadeiraIndex>>
-
-    @Query("SELECT id, nome FROM brincadeiras WHERE favorito = 1 AND nome LIKE '%' || :searchTerm || '%'")
-    fun getFavoriteBrincadeiras(searchTerm: String = ""): Flow<List<BrincadeiraIndex>>
 
     @Transaction
     @Query("SELECT * FROM brincadeiras WHERE id = :brincadeiraId")

@@ -1,9 +1,14 @@
 package com.toca.manualdebrincadeiras.screens.brincadeiraList
 
 import com.toca.manualdebrincadeiras.database.BrincadeiraIndex
+import com.toca.manualdebrincadeiras.database.Tipo
 
 data class BrincadeiraListState(
     val brincadeiras: List<BrincadeiraIndex> = emptyList(),
-    val nome: String = "",
-    val sortType: SortType = SortType.ID
+    val tipos: List<Tipo> = emptyList(),
+    val name: String = "",
+    val minAge: Int = 3,
+    val maxAge: Int = 16,
+    val isFavorite: Int? = null,
+    val typeIds: List<Int>? = null
 )
