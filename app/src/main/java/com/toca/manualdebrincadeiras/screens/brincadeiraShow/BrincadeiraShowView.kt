@@ -15,13 +15,12 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 
@@ -62,8 +61,7 @@ fun BrincadeiraShowView(
                 ) {
                     Text(
                         text = state.brincadeira?.brincadeira?.nome ?: "",
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold
+                        style = MaterialTheme.typography.titleLarge,
                     )
                     Text(text = "ID: ${state.brincadeira?.brincadeira?.id.toString()}")
                     Text(text = "Idade recomendada: ${state.brincadeira?.brincadeira?.idade_min.toString()} a ${state.brincadeira?.brincadeira?.idade_max.toString()} anos")
@@ -135,7 +133,7 @@ fun WebViewScreen(descricao: String) {
                     </body>
                 </html>
             """.trimIndent()
-            webView.isVerticalScrollBarEnabled = false;
+            webView.isVerticalScrollBarEnabled = false
             webView.loadDataWithBaseURL(
                 "file:///android_asset/images/",
                 unEncodedHtml,

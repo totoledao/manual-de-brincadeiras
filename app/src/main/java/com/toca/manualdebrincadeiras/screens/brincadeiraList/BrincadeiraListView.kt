@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -24,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -47,14 +47,13 @@ fun BrincadeiraListView(
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(shape = RoundedCornerShape(0.dp, 0.dp, 24.dp, 24.dp))
-                        .background(Color.LightGray)
+                        .background(MaterialTheme.colorScheme.surface)
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
                     Text(
                         "Busca",
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold
+                        style = MaterialTheme.typography.titleLarge,
                     )
                     TextField(
                         label = { Text("Nome") },
@@ -66,12 +65,12 @@ fun BrincadeiraListView(
                         singleLine = true,
                         shape = RoundedCornerShape(8.dp),
                         colors = TextFieldDefaults.colors().copy(
-                            focusedContainerColor = Color.White,
-                            focusedTextColor = Color.Black,
                             focusedIndicatorColor = Color.Transparent,
-                            unfocusedContainerColor = Color.White,
-                            unfocusedTextColor = Color.Gray,
                             unfocusedIndicatorColor = Color.Transparent
+//                            focusedContainerColor = Color.White,
+//                            focusedTextColor = Color.Black,
+//                            unfocusedContainerColor = Color.White,
+//                            unfocusedTextColor = Color.Gray,
                         )
                     )
                     Row(
@@ -146,8 +145,7 @@ fun BrincadeiraListView(
                                         onEvent(BrincadeiraListEvent.OnTypeIdsChange(tipo.id))
                                     },
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = (if (state.typeIds?.contains(tipo.id) == true) Color.Green else Color.White),
-                                        contentColor = Color.Black
+                                        containerColor = (if (state.typeIds.contains(tipo.id)) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
                                     )
                                 ) {
                                     Text(text = tipo.nome)
