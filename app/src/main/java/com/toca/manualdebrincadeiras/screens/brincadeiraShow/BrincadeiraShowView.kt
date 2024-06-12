@@ -49,7 +49,7 @@ fun BrincadeiraShowView(
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Go back",
-                        modifier = Modifier.clickable { navController.popBackStack() }
+                        modifier = Modifier.clickable { navController.navigateUp() }
                     )
 
                     FavoriteIcon(isFavorite = state.brincadeira?.brincadeira?.favorito == 1)
