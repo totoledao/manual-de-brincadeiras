@@ -75,6 +75,12 @@ fun BrincadeiraShowView(
                             Text(text = tipo.nome)
                         }
                     }
+                    state.brincadeira?.temas?.let {
+                        Text(text = "Temas:")
+                        it.forEach { tema ->
+                            Text(text = tema.nome)
+                        }
+                    }
                     Text(text = "Descrição:")
                     WebViewScreen(state.brincadeira?.brincadeira?.descricao ?: "")
                 }

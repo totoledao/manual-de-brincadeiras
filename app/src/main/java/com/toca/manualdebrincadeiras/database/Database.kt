@@ -4,10 +4,11 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [Brincadeira::class, Tipo::class, BrincadeiraTipo::class],
+    entities = [Brincadeira::class, Tipo::class, Tema::class, BrincadeiraTipo::class, BrincadeiraTema::class],
     version = 1
 )
 abstract class Database : RoomDatabase() {
     abstract val brincadeiraDao: BrincadeiraDao
     abstract val tipoDao: TipoDao
+    abstract val temaDao: TemaDao
 }

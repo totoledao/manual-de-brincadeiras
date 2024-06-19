@@ -6,4 +6,5 @@ sealed interface BrincadeiraListEvent {
     data class OnMaxAgeChange(val maxAge: Int) : BrincadeiraListEvent
     data class OnIsFavoriteChange(val isFavorite: Int?) : BrincadeiraListEvent
     data class OnTypeIdsChange(val typeIds: Int) : BrincadeiraListEvent
+    data class OnThemeIdsChange(val themeIds: Int) : BrincadeiraListEvent
 }

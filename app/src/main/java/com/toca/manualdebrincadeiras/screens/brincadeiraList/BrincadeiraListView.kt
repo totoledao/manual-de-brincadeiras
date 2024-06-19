@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.toca.manualdebrincadeiras.Routes
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BrincadeiraListView(
     state: BrincadeiraListState,
@@ -135,9 +138,7 @@ fun BrincadeiraListView(
 
                     state.tipos.let {
                         Text(text = "Tipos:")
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        )
+                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp))
                         {
                             it.forEach { tipo ->
                                 Button(
@@ -148,8 +149,35 @@ fun BrincadeiraListView(
                                         containerColor = (if (state.typeIds.contains(tipo.id)) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
                                     )
                                 ) {
-                                    Text(text = tipo.nome)
+                                    Text(
+                                        text = tipo.nome,
+                                        softWrap = false,
+                                        maxLines = 1
+                                    )
+                                }
+                            }
+                        }
+                    }
 
+                    state.temas.let {
+                        Text(text = "Temas:")
+                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp))
+                        {
+                            it.forEach { tema ->
+                                Button(
+                                    onClick = {
+                                        onEvent(BrincadeiraListEvent.OnThemeIdsChange(tema.id))
+                                    },
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = (if (state.themeIds.contains(tema.id)) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
+                                    )
+                                ) {
+                                    Text(
+                                        text = tema.nome,
+                                        softWrap = false,
+                                        maxLines = 1
+
+                                    )
                                 }
                             }
                         }

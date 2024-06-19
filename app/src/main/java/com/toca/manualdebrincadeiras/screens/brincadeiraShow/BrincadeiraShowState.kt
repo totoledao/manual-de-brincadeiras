@@ -1,8 +1,8 @@
 package com.toca.manualdebrincadeiras.screens.brincadeiraShow
 
-import com.toca.manualdebrincadeiras.database.BrincadeiraWithTipo
+import com.toca.manualdebrincadeiras.database.BrincadeiraAllData
 
 data class BrincadeiraShowState(
     val id: Int = 0,
-    val brincadeira: BrincadeiraWithTipo? = null,
+    val brincadeira: BrincadeiraAllData? = null,
 )

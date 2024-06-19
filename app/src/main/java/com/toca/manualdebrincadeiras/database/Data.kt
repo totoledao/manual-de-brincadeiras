@@ -46,3 +46,32 @@ data class BrincadeiraTipo(
     val brincadeira_id: Int,
     val tipo_id: Int
 )
+
+@Entity(tableName = "temas")
+data class Tema(
+    val nome: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+)
+
+@Entity(
+    tableName = "brincadeiras_temas",
+    primaryKeys = ["brincadeira_id", "tema_id"],
+    foreignKeys = [
+        ForeignKey(
+            entity = Brincadeira::class,
+            parentColumns = ["id"],
+            childColumns = ["brincadeira_id"]
+        ),
+        ForeignKey(
+            entity = Tema::class,
+            parentColumns = ["id"],
+            childColumns = ["tema_id"]
+        )
+    ],
+    indices = [Index(value = ["brincadeira_id"]), Index(value = ["tema_id"])]
+)
+data class BrincadeiraTema(
+    val brincadeira_id: Int,
+    val tema_id: Int
+)
