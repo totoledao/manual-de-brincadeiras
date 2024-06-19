@@ -53,6 +53,9 @@ interface BrincadeiraDao {
     @Transaction
     @Query("SELECT * FROM brincadeiras WHERE id = :brincadeiraId")
     fun showBrincadeira(brincadeiraId: Int): Flow<BrincadeiraAllData>
+
+    @Query("UPDATE brincadeiras SET favorito = :fav WHERE id = :brincadeiraId")
+    suspend fun updateFavorite(brincadeiraId: Int, fav: Int): Void
 }
 
 @Dao

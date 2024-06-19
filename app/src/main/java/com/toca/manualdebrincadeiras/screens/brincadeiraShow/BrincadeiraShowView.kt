@@ -52,7 +52,17 @@ fun BrincadeiraShowView(
                         modifier = Modifier.clickable { navController.navigateUp() }
                     )
 
-                    FavoriteIcon(isFavorite = state.brincadeira?.brincadeira?.favorito == 1)
+                    FavoriteIcon(
+                        isFavorite = state.brincadeira?.brincadeira?.favorito == 1,
+                        modifier = Modifier.clickable {
+                            onEvent(
+                                BrincadeiraShowEvent.UpdateFavorite(
+                                    state.brincadeira?.brincadeira?.id!!,
+                                    if (state.brincadeira.brincadeira.favorito == 1) 0 else 1
+                                )
+                            )
+                        }
+                    )
                 }
             }
             item {
@@ -91,8 +101,9 @@ fun BrincadeiraShowView(
 }
 
 @Composable
-fun FavoriteIcon(isFavorite: Boolean) {
+fun FavoriteIcon(isFavorite: Boolean, modifier: Modifier) {
     Icon(
+        modifier = modifier,
         imageVector = if (isFavorite) {
             Icons.Filled.Favorite
         } else {

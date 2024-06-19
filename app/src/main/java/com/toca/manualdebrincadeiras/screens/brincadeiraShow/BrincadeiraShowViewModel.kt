@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BrincadeiraShowViewModel(
@@ -27,9 +28,17 @@ class BrincadeiraShowViewModel(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), BrincadeiraShowState())
 
-    fun onEvent(event: BrincadeiraShowEvent) = when (event) {
-        is BrincadeiraShowEvent.ShowBrincadeira -> {
-            _id.value = event.id
+    fun onEvent(event: BrincadeiraShowEvent) {
+        when (event) {
+            is BrincadeiraShowEvent.ShowBrincadeira -> {
+                _id.value = event.id
+            }
+
+            is BrincadeiraShowEvent.UpdateFavorite -> {
+                viewModelScope.launch {
+                    dao.brincadeiraDao.updateFavorite(event.id, event.fav)
+                }
+            }
         }
     }
 
