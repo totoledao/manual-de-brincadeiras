@@ -17,8 +17,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -95,37 +95,14 @@ fun BrincadeiraListView(
                     }
 
                     Column {
-                        Text(
-                            "Idade mínima: ${state.minAge} anos",
-                        )
-                        Slider(
-                            value = state.minAge.toFloat(),
-                            onValueChange = {
-                                onEvent(BrincadeiraListEvent.OnMinAgeChange(it.toInt()))
+                        Text("Idade: ${if (state.minAge == state.maxAge) state.minAge else "${state.minAge} a ${state.maxAge}"} anos")
+                        RangeSlider(
+                            value = state.ageRange,
+                            onValueChange = { range ->
+                                onEvent(BrincadeiraListEvent.OnAgeRangeChange(range))
                             },
                             valueRange = 3f..16f,
-                            steps = 16,
-                        )
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text("3")
-                            Text("16+")
-                        }
-                    }
-
-                    Column {
-                        Text(
-                            "Idade máxima: ${state.maxAge} anos",
-                        )
-                        Slider(
-                            value = state.maxAge.toFloat(),
-                            onValueChange = {
-                                onEvent(BrincadeiraListEvent.OnMaxAgeChange(it.toInt()))
-                            },
-                            valueRange = 3f..16f,
-                            steps = 16,
+                            steps = 12
                         )
                         Row(
                             modifier = Modifier.fillMaxWidth(),

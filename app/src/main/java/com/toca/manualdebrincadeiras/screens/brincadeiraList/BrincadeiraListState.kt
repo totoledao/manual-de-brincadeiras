@@ -11,6 +11,7 @@ data class BrincadeiraListState(
     val name: String = "",
     val minAge: Int = 3,
     val maxAge: Int = 16,
+    val ageRange: ClosedFloatingPointRange<Float> = 3f..16f,
     val isFavorite: Int? = null,
     val typeIds: List<Int> = emptyList(),
     val themeIds: List<Int> = emptyList()

@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BrincadeiraListViewModel(private val dao: Database) : ViewModel() {
@@ -37,8 +38,8 @@ class BrincadeiraListViewModel(private val dao: Database) : ViewModel() {
             any[1] as Int,
             any[2] as Int,
             any[3] as Int?,
-            any[4] as List<Int>,
-            any[5] as List<Int>
+            (any[4] as? List<*>)?.filterIsInstance<Int>() ?: emptyList(),
+            (any[5] as? List<*>)?.filterIsInstance<Int>() ?: emptyList()
         )
     }.flatMapLatest { filter ->
         dao.brincadeiraDao.getBrincadeiras(
@@ -76,20 +77,6 @@ class BrincadeiraListViewModel(private val dao: Database) : ViewModel() {
                 )
             }
 
-            is BrincadeiraListEvent.OnMinAgeChange -> {
-                _minAge.value = event.minAge
-                _state.value = _state.value.copy(
-                    minAge = event.minAge,
-                )
-            }
-
-            is BrincadeiraListEvent.OnMaxAgeChange -> {
-                _maxAge.value = event.maxAge
-                _state.value = _state.value.copy(
-                    maxAge = event.maxAge,
-                )
-            }
-
             is BrincadeiraListEvent.OnIsFavoriteChange -> {
                 _isFavorite.value = event.isFavorite
                 _state.value = _state.value.copy(
@@ -103,6 +90,17 @@ class BrincadeiraListViewModel(private val dao: Database) : ViewModel() {
 
             is BrincadeiraListEvent.OnThemeIdsChange -> {
                 handleChangeId(_themeIds, _state, event.themeIds, false)
+            }
+
+            is BrincadeiraListEvent.OnAgeRangeChange -> {
+                _minAge.value = event.ageRange.start.roundToInt()
+                _maxAge.value = event.ageRange.endInclusive.roundToInt()
+                _state.value = _state.value.copy(
+                    minAge = event.ageRange.start.roundToInt(),
+                    maxAge = event.ageRange.endInclusive.roundToInt(),
+                    ageRange = event.ageRange.start.roundToInt()
+                        .toFloat()..event.ageRange.endInclusive.roundToInt().toFloat()
+                )
             }
         }
     }
