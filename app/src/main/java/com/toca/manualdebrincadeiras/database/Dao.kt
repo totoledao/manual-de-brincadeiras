@@ -69,3 +69,9 @@ interface TemaDao {
     @Query("SELECT * FROM temas")
     fun getTemas(): Flow<List<Tema>>
 }
+
+@Dao
+interface GlossarioDao {
+    @Query("SELECT * FROM glossario WHERE id = :definicaoId")
+    fun showDefinicao(definicaoId: Int): Flow<Definicao>
+}

@@ -75,3 +75,11 @@ data class BrincadeiraTema(
     val brincadeira_id: Int,
     val tema_id: Int
 )
+
+@Entity(tableName = "glossario")
+data class Definicao(
+    val nome: String,
+    val descricao: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+)
