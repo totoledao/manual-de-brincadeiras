@@ -5,21 +5,19 @@ import android.content.Context
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.viewinterop.AndroidView
 
-
-class ShowGlossary(private val context: Context) {
-    @JavascriptInterface
-    fun showGlossaryTerm(id: Int) {
-        Toast.makeText(context, "Glossary Term: $id", Toast.LENGTH_SHORT).show()
-    }
-}
-
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebViewContent(descricao: String) {
+fun WebViewContent(descricao: String, handleGlossary: (id: Int) -> Unit) {
+
+    class ShowGlossary(private val context: Context) {
+        @JavascriptInterface
+        fun showGlossaryTerm(id: Int) {
+            handleGlossary(id)
+        }
+    }
 
     AndroidView(
         factory = { context ->
@@ -57,9 +55,8 @@ fun WebViewContent(descricao: String) {
                             }
                         </script>
                     </head>
-                    <body> 
+                    <body>
                         $descricao
-                        <a href="javascript:void(0)" onclick="showGlossary(1)">pegador</a>
                     </body>
                 </html>
             """.trimIndent()

@@ -39,6 +39,24 @@ class BrincadeiraShowViewModel(
                     dao.brincadeiraDao.updateFavorite(event.id, event.fav)
                 }
             }
+
+            is BrincadeiraShowEvent.ShowDefinicao -> {
+                viewModelScope.launch {
+                    dao.glossarioDao.showDefinicao(event.id).collect {
+                        _state.value = _state.value.copy(
+                            definicao = it
+                        )
+                    }
+                }
+            }
+
+            is BrincadeiraShowEvent.ShowHideBottomModal -> {
+                viewModelScope.launch {
+                    _state.value = _state.value.copy(
+                        showBottomModal = event.show
+                    )
+                }
+            }
         }
     }
 

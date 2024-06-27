@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.toca.manualdebrincadeiras.screens.brincadeiraShow.components.BottomModal
 import com.toca.manualdebrincadeiras.screens.brincadeiraShow.components.WebViewContent
 
 @Composable
@@ -90,7 +91,13 @@ fun BrincadeiraShowView(
                         }
                     }
                     Text(text = "Descrição:")
-                    WebViewContent(state.brincadeira?.brincadeira?.descricao ?: "")
+                    WebViewContent(state.brincadeira?.brincadeira?.descricao ?: "") {
+                        onEvent(BrincadeiraShowEvent.ShowDefinicao(it))
+                        onEvent(BrincadeiraShowEvent.ShowHideBottomModal(true))
+                    }
+                    BottomModal(state.showBottomModal, state.definicao) {
+                        onEvent(BrincadeiraShowEvent.ShowHideBottomModal(false))
+                    }
                 }
             }
 
