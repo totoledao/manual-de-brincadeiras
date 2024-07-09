@@ -69,7 +69,7 @@ This app is a collaborative project designed to be the go to resource for childr
 ### Technical Goals
 
 This app, while solving a real problem, was also created to consolidate my knowledge of Kotlin and the native Android platform while implementing advanced search queries with SQLite.
-<br>One of the primary technical challenges involves rendering the content of the game's descriptions as a web view. This decision was made to ensure ease of customization for each individual description and to facilitate the display of images preloaded in the app's assets using <img> tags, as it can be stored as text/html. This ensures that visual content is readily available without relying on an internet connection. The web view also features a bridge call from the JavaScript to the native code, which triggers the display of a bottom drawer that searches for and shows a term from the glossary.
+<br>One of the primary technical challenges involves rendering the content of the game's descriptions as a web view. This decision was made to ensure ease of customization for each individual description and to facilitate the display of images preloaded in the app's assets using `<img>` tags, as it can be stored as text/html. This ensures that visual content is readily available without relying on an internet connection. The web view also features a bridge call from the JavaScript to the native code, which triggers the display of a bottom drawer that searches for and shows a term from the glossary.
 
 <!-- GETTING STARTED -->
 
