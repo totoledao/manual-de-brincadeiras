@@ -94,7 +94,8 @@ To get a local copy up and running follow these simple steps.
 ## Usage
 
 https://github.com/totoledao/manual-de-brincadeiras/assets/40635662/43c214bf-b3ad-4d5c-a793-b65e19c0de51
-<br>Advanced search and add to favorites usage example
+
+Advanced search and add to favorites usage example
 
 <!-- LICENSE -->
 
