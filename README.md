@@ -60,7 +60,7 @@ This app is a collaborative project designed to be the go to resource for childr
 
 ### Features
 
-- Extensive Collection: It will include a wide range of activities, from interactive games and creative workshops to engaging plays and sing-alongs. (Currently there are just a few games)
+- Extensive Collection: It will include a wide range of activities, from interactive games and creative workshops to engaging plays and sing-alongs. (Currently there are just a few games serving as placeholder)
 - User-Friendly Interface: Designed with simplicity and ease of use in mind.
 - Advanced Search: Quickly find specific activities or browse through different categories to discover new ones.
 - Favorites: Save favorite activities for quick access and future reference.
@@ -77,7 +77,9 @@ This app, while solving a real problem, was also created to consolidate my knowl
 
 To get a local copy up and running follow these simple steps.
 
-<!-- ### Prerequisites -->
+### Prerequisites
+
+- [Android Studio](https://developer.android.com/studio)
 
 ### Installation
 
@@ -85,17 +87,14 @@ To get a local copy up and running follow these simple steps.
    ```sh
    git clone https://github.com/totoledao/manual-de-brincadeiras.git
    ```
-   <!-- 2. Install the dependencies of each folder
-      ```sh
-      cd server; npm i
-      ``` -->
+2. Open the project folder in Android Studio and Run ▶️
 
 <!-- USAGE EXAMPLES -->
 
-<!-- ## Usage -->
+## Usage
 
-<!-- ![web-login](https://github.com/totoledao/totoledao/assets/40635662/60743232-836d-4190-96bc-828b88c560ed)
-Create an account or Login using your GitHub account -->
+https://github.com/totoledao/manual-de-brincadeiras/assets/40635662/43c214bf-b3ad-4d5c-a793-b65e19c0de51
+<br>Advanced search and add to favorites usage example
 
 <!-- LICENSE -->
 
