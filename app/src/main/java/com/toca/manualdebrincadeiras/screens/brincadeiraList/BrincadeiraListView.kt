@@ -113,28 +113,28 @@ fun BrincadeiraListView(
                         }
                     }
 
-                    state.tipos.let {
-                        Text(text = "Tipos:")
-                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp))
-                        {
-                            it.forEach { tipo ->
-                                Button(
-                                    onClick = {
-                                        onEvent(BrincadeiraListEvent.OnTypeIdsChange(tipo.id))
-                                    },
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = (if (state.typeIds.contains(tipo.id)) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
-                                    )
-                                ) {
-                                    Text(
-                                        text = tipo.nome,
-                                        softWrap = false,
-                                        maxLines = 1
-                                    )
-                                }
-                            }
-                        }
-                    }
+//                    state.tipos.let {
+//                        Text(text = "Tipos:")
+//                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp))
+//                        {
+//                            it.forEach { tipo ->
+//                                Button(
+//                                    onClick = {
+//                                        onEvent(BrincadeiraListEvent.OnTypeIdsChange(tipo.id))
+//                                    },
+//                                    colors = ButtonDefaults.buttonColors(
+//                                        containerColor = (if (state.typeIds.contains(tipo.id)) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
+//                                    )
+//                                ) {
+//                                    Text(
+//                                        text = tipo.nome,
+//                                        softWrap = false,
+//                                        maxLines = 1
+//                                    )
+//                                }
+//                            }
+//                        }
+//                    }
 
                     state.temas.let {
                         Text(text = "Temas:")
