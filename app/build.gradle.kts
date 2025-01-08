@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.toca.manualdebrincadeiras"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.totoledao.brincadeiras"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 5
         versionName = "1.0.4"
 
